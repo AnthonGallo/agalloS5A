@@ -59,5 +59,42 @@ namespace agalloS5A.Repository
             }
             return new List<Persona>();
         }
+
+        public void UpdatePerson(int id, string name)
+        {
+            try
+            {
+                Init();
+                var persona = conn.Find<Persona>(id);
+                if (persona == null)
+                    throw new Exception("La persona no fue encuentrada");
+
+                persona.Name = name;
+                conn.Update(persona);
+                statusMessage = "La persona se actualizó correctamente";
+            }
+            catch (Exception ex)
+            {
+                statusMessage = $"Error: {ex.Message}";
+            }
+        }
+
+        public void DeletePerson(int id) {
+            try
+            {
+                Init();
+                var persona = conn.Find<Persona>(id);
+                if(persona == null)
+                    throw new Exception("La persona no fue encontrada");
+
+                conn.Delete(persona);
+                statusMessage = "La persona se eliminó correctamente";
+            }
+            catch (Exception ex)
+            {
+
+                statusMessage = $"Error: {ex.Message}";
+            }
+        }
     }
 }
